@@ -25,12 +25,21 @@ function setup() {
     }
   }
 
-  grid[0].collapsed = true;
-  grid[0].options = [UP]
+  grid[0].options = [UP, RIGHT]
+  grid[2].options = [UP, RIGHT]
 }
 
 function draw() {
   background(0);
+  let sortedGrid = grid.slice();
+  sortedGrid.sort((a, b) => a.options.length - b.options.length)
+  sortedGrid = sortedGrid.filter((tileObject) => tileObject.options.length === sortedGrid[0].options.length )
+  const tile = random(sortedGrid);
+  tile.collapsed = true;
+  const chosenTile = random(tile.options);
+  tile.options = [chosenTile];
+
+  console.log
 
   const w = width / DIM;
   const h = height / DIM
@@ -46,4 +55,5 @@ function draw() {
       }
     }
   }
+  noLoop()
 }
