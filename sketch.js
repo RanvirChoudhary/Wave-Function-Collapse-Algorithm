@@ -8,6 +8,39 @@ const RIGHT = 2;
 const DOWN = 3;
 const LEFT = 4;
 
+const rules = {
+  BLANK: [
+    [BLANK, UP],
+    [BLANK, RIGHT]
+    [BLANK, DOWN]
+    [BLANK, LEFT]
+  ],
+  UP: [
+    [RIGHT, LEFT, DOWN],
+    [LEFT, UP, DOWN],
+    [BLANK, DOWN]
+    [RIGHT, UP, DOWN],
+  ],
+  RIGHT: [
+    [RIGHT, LEFT, DOWN],
+    [LEFT, UP, DOWN],
+    [RIGHT, LEFT, UP],
+    [BLANK, LEFT]
+  ],
+  DOWN: [
+    [BLANK, UP],
+    [LEFT, UP, DOWN],
+    [RIGHT, LEFT, UP],
+    [RIGHT, UP, DOWN]
+  ],
+  LEFT: [
+    [RIGHT, LEFT, DOWN],
+    [BLANK, RIGHT],
+    [RIGHT, LEFT, UP],
+    [UP, DOWN, RIGHT]
+  ]
+}
+
 function preload() {
   tiles[0] = loadImage("tiles/demo/blank.png");
   tiles[1] = loadImage("tiles/demo/up.png");
@@ -18,15 +51,12 @@ function preload() {
 
 function setup() {
   createCanvas(400, 400);
-  for (let i = 0; i < DIM**2; i++) {
+   for (let i = 0; i < DIM**2; i++) {
     grid[i] = {
       collapsed: false,
       options: [BLANK, UP, RIGHT, DOWN, LEFT]
     }
   }
-
-  grid[0].options = [UP, RIGHT]
-  grid[2].options = [UP, RIGHT]
 }
 
 function draw() {
@@ -34,12 +64,11 @@ function draw() {
   let sortedGrid = grid.slice();
   sortedGrid.sort((a, b) => a.options.length - b.options.length)
   sortedGrid = sortedGrid.filter((tileObject) => tileObject.options.length === sortedGrid[0].options.length )
+
   const tile = random(sortedGrid);
   tile.collapsed = true;
   const chosenTile = random(tile.options);
   tile.options = [chosenTile];
-
-  console.log
 
   const w = width / DIM;
   const h = height / DIM
@@ -52,6 +81,18 @@ function draw() {
       } else {
         fill(255, 0, 0);
         rect(i*w, j*h, w, h)
+      }
+    }
+  }
+
+  const nextTiles = []
+  for(let i = 0; i < DIM; i++){
+    for(let j = 0; j < DIM; j++){
+      let index = j + i * DIM;
+      if(grid[index].collapsed) {
+        nextTiles[index] = grid[index]
+      } else {
+        
       }
     }
   }
