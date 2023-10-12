@@ -1,6 +1,6 @@
 const tiles = [];
 const grid = [];
-const DIM = 20;
+const DIM = 3;
 
 function collapseCell(cell, x, y, width, height){
   image(random(tiles).image, x, y, width, height)
@@ -19,36 +19,25 @@ function setup() {
   for (let i = 0; i < DIM*DIM; i++) {
     grid[i] = {
       collapsed: false,
-      entropy: 5
+      options: [0,1,2,3,4]
     }
   }
-  grid[1].collapsed = true
 }
 
 function draw() {
-  background(100);
-  let gridCopy = structuredClone(grid)
+  background(0);
+  let canCollapse = structuredClone(grid)
+  let lowEntropy = 5;
   for (let i = 0; i < grid.length; i++) {
     const cell = grid[i];
-    let minEntropy = 5;
-    if (cell.entropy < minEntropy) {
-      minEntropy = cell.entropy;
+    if (cell.options.length < lowEntropy && !cell.collapsed){
+      lowEntropy = cell.options.length
     }
-    gridCopy = gridCopy.map((cell) => {
-      if (cell.entropy === minEntropy){
-        cell.collapseThisIteration = true
-      }
-      return cell
-    })
-    indexesToCollapse = []
-    for (let i = 0; i < gridCopy.length; i++) {
-      const cell = gridCopy[i];
-      if (cell.collapseThisIteration === true) {
-        indexesToCollapse.push(i)
-      }
-    }
-    chosenIndex = random(indexesToCollapse)
-    collapseCell(grid[chosenIndex], (chosenIndex % DIM)*(width/DIM), (Math.floor(chosenIndex / DIM))*(height/DIM), width/DIM, height/DIM)
   }
+
+  canCollapse = canCollapse.filter((cell) => cell.options.length === lowEntropy && !cell.collapsed)
+  toCollapse = random(canCollapse)
+  collapseCell(toCollapse, )
+
   noLoop()
 }
