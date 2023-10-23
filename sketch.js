@@ -1,7 +1,7 @@
 const tiles = [];
 const grid = [];
 let canCollapse;
-const DIM = 4;
+const DIM = 10;
 
 function collapseCell(cell, x, y, width, height){
   image(random(tiles).image, x, y, width, height)
@@ -22,35 +22,258 @@ function observe(cellPosition) {
   let down = grid[cellPosition + DIM]
   let left = grid[cellPosition - 1]
   if (cellPosition === 0){
+    //right
     for (let i = 0; i < right.options.length; i++) {
       const option = right.options[i];
-      collapsedRightSocket = tiles[collapsedCell.options[0]].sockets[1]
-      rightLeftSocket = tiles[option].sockets[3]
+      let collapsedRightSocket = tiles[collapsedCell.options[0]].sockets[1]
+      let rightLeftSocket = tiles[option].sockets[3]
       if (collapsedRightSocket != rightLeftSocket) {
         right.options.splice(i, 1)
         i -= 1
       }
     }
-    
+    // down
+    for (let i = 0; i < down.options.length; i++) {
+      const option = down.options[i];
+      let collapsedDownSocket = tiles[collapsedCell.options[0]].sockets[2]
+      let downUpSocket = tiles[option].sockets[0]
+      if (collapsedDownSocket != downUpSocket) {
+        down.options.splice(i, 1)
+        i -= 1
+      }
+    }
   } else if (cellPosition === DIM - 1) {
-    // check left and down
+    // left
+    for (let i = 0; i < left.options.length; i++) {
+      const option = left.options[i];
+      let collapsedLeftSocket = tiles[collapsedCell.options[0]].sockets[3]
+      let leftRightSocket = tiles[option].sockets[1]
+      if (collapsedLeftSocket != leftRightSocket) {
+        left.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // down
+    for (let i = 0; i < down.options.length; i++) {
+      const option = down.options[i];
+      let collapsedDownSocket = tiles[collapsedCell.options[0]].sockets[2]
+      let downUpSocket = tiles[option].sockets[0]
+      if (collapsedDownSocket != downUpSocket) {
+        down.options.splice(i, 1)
+        i -= 1
+      }
+    }
   } else if (cellPosition === DIM*DIM - DIM) {
-    // check up and right
+    //up
+    for (let i = 0; i < up.options.length; i++) {
+      const option = up.options[i];
+      let collapsedUpSocket = tiles[collapsedCell.options[0]].sockets[0]
+      let upDownSocket = tiles[option].sockets[2]
+      if (collapsedUpSocket != upDownSocket) {
+        up.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    //right
+    for (let i = 0; i < right.options.length; i++) {
+      const option = right.options[i];
+      let collapsedRightSocket = tiles[collapsedCell.options[0]].sockets[1]
+      let rightLeftSocket = tiles[option].sockets[3]
+      if (collapsedRightSocket != rightLeftSocket) {
+        right.options.splice(i, 1)
+        i -= 1
+      }
+    }
   } else if (cellPosition === DIM*DIM - 1) {
-    // check up and left
+    //up
+    for (let i = 0; i < up.options.length; i++) {
+      const option = up.options[i];
+      let collapsedUpSocket = tiles[collapsedCell.options[0]].sockets[0]
+      let upDownSocket = tiles[option].sockets[2]
+      if (collapsedUpSocket != upDownSocket) {
+        up.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // left
+    for (let i = 0; i < left.options.length; i++) {
+      const option = left.options[i];
+      let collapsedLeftSocket = tiles[collapsedCell.options[0]].sockets[3]
+      let leftRightSocket = tiles[option].sockets[1]
+      if (collapsedLeftSocket != leftRightSocket) {
+        left.options.splice(i, 1)
+        i -= 1
+      }
+    }
   } else if (cellPosition < DIM) {
-    // check everything except up
+    //right
+    for (let i = 0; i < right.options.length; i++) {
+      const option = right.options[i];
+      let collapsedRightSocket = tiles[collapsedCell.options[0]].sockets[1]
+      let rightLeftSocket = tiles[option].sockets[3]
+      if (collapsedRightSocket != rightLeftSocket) {
+        right.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // down
+    for (let i = 0; i < down.options.length; i++) {
+      const option = down.options[i];
+      let collapsedDownSocket = tiles[collapsedCell.options[0]].sockets[2]
+      let downUpSocket = tiles[option].sockets[0]
+      if (collapsedDownSocket != downUpSocket) {
+        down.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // left
+    for (let i = 0; i < left.options.length; i++) {
+      const option = left.options[i];
+      let collapsedLeftSocket = tiles[collapsedCell.options[0]].sockets[3]
+      let leftRightSocket = tiles[option].sockets[1]
+      if (collapsedLeftSocket != leftRightSocket) {
+        left.options.splice(i, 1)
+        i -= 1
+      }
+    }
   } else if (cellPosition % DIM === cellPosition - 1) {
-    // check everything except right
+    //up
+    for (let i = 0; i < up.options.length; i++) {
+      const option = up.options[i];
+      let collapsedUpSocket = tiles[collapsedCell.options[0]].sockets[0]
+      let upDownSocket = tiles[option].sockets[2]
+      if (collapsedUpSocket != upDownSocket) {
+        up.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // down
+    for (let i = 0; i < down.options.length; i++) {
+      const option = down.options[i];
+      let collapsedDownSocket = tiles[collapsedCell.options[0]].sockets[2]
+      let downUpSocket = tiles[option].sockets[0]
+      if (collapsedDownSocket != downUpSocket) {
+        down.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // left
+    for (let i = 0; i < left.options.length; i++) {
+      const option = left.options[i];
+      let collapsedLeftSocket = tiles[collapsedCell.options[0]].sockets[3]
+      let leftRightSocket = tiles[option].sockets[1]
+      if (collapsedLeftSocket != leftRightSocket) {
+        left.options.splice(i, 1)
+        i -= 1
+      }
+    }
   } else if (cellPosition > DIM*DIM - (DIM + 1)) {
-    // check everything except down
+    //up
+    for (let i = 0; i < up.options.length; i++) {
+      const option = up.options[i];
+      let collapsedUpSocket = tiles[collapsedCell.options[0]].sockets[0]
+      let upDownSocket = tiles[option].sockets[2]
+      if (collapsedUpSocket != upDownSocket) {
+        up.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    //right
+    for (let i = 0; i < right.options.length; i++) {
+      const option = right.options[i];
+      let collapsedRightSocket = tiles[collapsedCell.options[0]].sockets[1]
+      let rightLeftSocket = tiles[option].sockets[3]
+      if (collapsedRightSocket != rightLeftSocket) {
+        right.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // left
+    for (let i = 0; i < left.options.length; i++) {
+      const option = left.options[i];
+      let collapsedLeftSocket = tiles[collapsedCell.options[0]].sockets[3]
+      let leftRightSocket = tiles[option].sockets[1]
+      if (collapsedLeftSocket != leftRightSocket) {
+        left.options.splice(i, 1)
+        i -= 1
+      }
+    }
   } else if (cellPosition % DIM === 0) {
-    // check everything except left
+    //up
+    for (let i = 0; i < up.options.length; i++) {
+      const option = up.options[i];
+      let collapsedUpSocket = tiles[collapsedCell.options[0]].sockets[0]
+      let upDownSocket = tiles[option].sockets[2]
+      if (collapsedUpSocket != upDownSocket) {
+        up.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    //right
+    for (let i = 0; i < right.options.length; i++) {
+      const option = right.options[i];
+      let collapsedRightSocket = tiles[collapsedCell.options[0]].sockets[1]
+      let rightLeftSocket = tiles[option].sockets[3]
+      if (collapsedRightSocket != rightLeftSocket) {
+        right.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // down
+    for (let i = 0; i < down.options.length; i++) {
+      const option = down.options[i];
+      let collapsedDownSocket = tiles[collapsedCell.options[0]].sockets[2]
+      let downUpSocket = tiles[option].sockets[0]
+      if (collapsedDownSocket != downUpSocket) {
+        down.options.splice(i, 1)
+        i -= 1
+      }
+    }
+  } else {
+    //up
+    for (let i = 0; i < up.options.length; i++) {
+      const option = up.options[i];
+      let collapsedUpSocket = tiles[collapsedCell.options[0]].sockets[0]
+      let upDownSocket = tiles[option].sockets[2]
+      if (collapsedUpSocket != upDownSocket) {
+        up.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    //right
+    for (let i = 0; i < right.options.length; i++) {
+      const option = right.options[i];
+      let collapsedRightSocket = tiles[collapsedCell.options[0]].sockets[1]
+      let rightLeftSocket = tiles[option].sockets[3]
+      if (collapsedRightSocket != rightLeftSocket) {
+        right.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // down
+    for (let i = 0; i < down.options.length; i++) {
+      const option = down.options[i];
+      let collapsedDownSocket = tiles[collapsedCell.options[0]].sockets[2]
+      let downUpSocket = tiles[option].sockets[0]
+      if (collapsedDownSocket != downUpSocket) {
+        down.options.splice(i, 1)
+        i -= 1
+      }
+    }
+    // left
+    for (let i = 0; i < left.options.length; i++) {
+      const option = left.options[i];
+      let collapsedLeftSocket = tiles[collapsedCell.options[0]].sockets[3]
+      let leftRightSocket = tiles[option].sockets[1]
+      if (collapsedLeftSocket != leftRightSocket) {
+        left.options.splice(i, 1)
+        i -= 1
+      }
+    }
   }
 }
 
 function collapseCell(cellPosition, canCollapse, grid){
-  console.log(cellPosition)
   realCell = grid[cellPosition]
   realCell.collapsed = true
   realCell.options = [random(realCell.options)]
@@ -87,7 +310,6 @@ function draw() {
     }
   }
   canCollapse.sort((cellA, cellB) => cellA.options.length - cellB.options.length)
-  console.log(canCollapse)
   collapseCell(canCollapse[0].position, canCollapse, grid)
   noLoop()
 }
