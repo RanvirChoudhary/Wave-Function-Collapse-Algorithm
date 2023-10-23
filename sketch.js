@@ -3,10 +3,6 @@ const grid = [];
 let canCollapse;
 const DIM = 10;
 
-function collapseCell(cell, x, y, width, height){
-  image(random(tiles).image, x, y, width, height)
-}
-
 function preload() {
   tiles[0] = { sockets: [0,0,0,0], image: loadImage("tiles/polka/blank.png") }
   tiles[1] = { sockets: [1,1,0,1], image: loadImage("tiles/polka/up.png") }
@@ -273,16 +269,15 @@ function observe(cellPosition) {
   }
 }
 
-function collapseCell(cellPosition, canCollapse, grid){
+function collapseCell(cellPosition, grid){
   realCell = grid[cellPosition]
   realCell.collapsed = true
   realCell.options = [random(realCell.options)]
-  canCollapse.shift()
   observe(cellPosition)
 }
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(800, 800);
   for (let i = 0; i < DIM*DIM; i++) {
     grid[i] = {
       position: i,
@@ -298,6 +293,7 @@ function mousePressed(){
 }
 
 function draw() {
+  canCollapse = structuredClone(grid)
   background(0);
   for (let i = 0; i < grid.length; i++) {
     const cell = grid[i];
@@ -310,6 +306,15 @@ function draw() {
     }
   }
   canCollapse.sort((cellA, cellB) => cellA.options.length - cellB.options.length)
-  collapseCell(canCollapse[0].position, canCollapse, grid)
+  let lowestEntropy;
+  for (const cell of canCollapse) {
+    if (cell.options.length != 1){
+      lowestEntropy = cell.options.length
+      break
+    }
+  }
+  canCollapse = canCollapse.filter(cell => cell.options.length === lowestEntropy)
+  console.log(canCollapse)
+  collapseCell(random(canCollapse).position, grid)
   noLoop()
 }
