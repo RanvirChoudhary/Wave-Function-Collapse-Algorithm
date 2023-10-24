@@ -4,11 +4,11 @@ let canCollapse;
 const DIM = 10;
 
 function preload() {
-  tiles[0] = { sockets: [0,0,0,0], image: loadImage("tiles/polka/blank.png") }
-  tiles[1] = { sockets: [1,1,0,1], image: loadImage("tiles/polka/up.png") }
-  tiles[2] = { sockets: [1,1,1,0], image: loadImage("tiles/polka/right.png") }
-  tiles[3] = { sockets: [0,1,1,1], image: loadImage("tiles/polka/down.png") }
-  tiles[4] = { sockets: [1,0,1,1], image: loadImage("tiles/polka/left.png") }
+  tiles[0] = { sockets: [0,0,0,0], image: loadImage("tiles/mountains/blank.png") }
+  tiles[1] = { sockets: [1,1,0,1], image: loadImage("tiles/mountains/up.png") }
+  tiles[2] = { sockets: [1,1,1,0], image: loadImage("tiles/mountains/right.png") }
+  tiles[3] = { sockets: [0,1,1,1], image: loadImage("tiles/mountains/down.png") }
+  tiles[4] = { sockets: [1,0,1,1], image: loadImage("tiles/mountains/left.png") }
 }
 
 function checkAdjacencyUp(adjacentCell, collapsedCell){
@@ -91,39 +91,27 @@ function observe(cellPosition) {
   let right = grid[cellPosition + 1]
   let down = grid[cellPosition + DIM]
   let left = grid[cellPosition - 1]
+
+  // You could make all these a single || condition
+
   if (cellPosition === 0){
-    if (!checkAdjacencyRight(right, collapsedCell)) return false
-    if (!checkAdjacencyDown(down, collapsedCell)) return false
+    if (!checkAdjacencyRight(right, collapsedCell) || !checkAdjacencyDown(down, collapsedCell)) return false
   } else if (cellPosition === DIM - 1) {
-    if (!checkAdjacencyLeft(left, collapsedCell)) return false
-    if (!checkAdjacencyDown(down, collapsedCell)) return false
+    if (!checkAdjacencyLeft(left, collapsedCell) || !checkAdjacencyDown(down, collapsedCell)) return false
   } else if (cellPosition === DIM*DIM - DIM) {
-    if (!checkAdjacencyUp(up, collapsedCell)) return false
-    if (!checkAdjacencyRight(right, collapsedCell)) return false
+    if (!checkAdjacencyUp(up, collapsedCell) || !checkAdjacencyRight(right, collapsedCell)) return false
   } else if (cellPosition === DIM*DIM - 1) {
-    if (!checkAdjacencyUp(up, collapsedCell)) return false
-    if (!checkAdjacencyLeft(left, collapsedCell)) return false
+    if (!checkAdjacencyUp(up, collapsedCell) || !checkAdjacencyLeft(left, collapsedCell)) return false
   } else if (cellPosition < DIM) {
-    if (!checkAdjacencyRight(right, collapsedCell)) return false
-    if (!checkAdjacencyDown(down, collapsedCell)) return false
-    if (!checkAdjacencyLeft(left, collapsedCell)) return false
+    if (!checkAdjacencyRight(right, collapsedCell) || !checkAdjacencyDown(down, collapsedCell) || !checkAdjacencyLeft(left, collapsedCell)) return false
   } else if (cellPosition % DIM === cellPosition - 1) {
-    if (!checkAdjacencyUp(up, collapsedCell)) return false
-    if (!checkAdjacencyDown(down, collapsedCell)) return false
-    if (!checkAdjacencyLeft(left, collapsedCell)) return false
+    if (!checkAdjacencyUp(up, collapsedCell) || !checkAdjacencyDown(down, collapsedCell) || !checkAdjacencyLeft(left, collapsedCell)) return false
   } else if (cellPosition > DIM*DIM - (DIM + 1)) {
-    if (!checkAdjacencyUp(up, collapsedCell)) return false
-    if (!checkAdjacencyRight(right, collapsedCell)) return false
-    if (!checkAdjacencyLeft(left, collapsedCell)) return false
+    if (!checkAdjacencyUp(up, collapsedCell) || !checkAdjacencyRight(right, collapsedCell) || !checkAdjacencyLeft(left, collapsedCell)) return false
   } else if (cellPosition % DIM === 0) {
-    if (!checkAdjacencyUp(up, collapsedCell)) return false
-    if (!checkAdjacencyRight(right, collapsedCell)) return false
-    if (!checkAdjacencyDown(down, collapsedCell)) return false
+    if (!checkAdjacencyUp(up, collapsedCell) || !checkAdjacencyRight(right, collapsedCell) || !checkAdjacencyDown(down, collapsedCell)) return false
   } else {
-    if (!checkAdjacencyUp(up, collapsedCell)) return false
-    if (!checkAdjacencyRight(right, collapsedCell)) return false
-    if (!checkAdjacencyDown(down, collapsedCell)) return false
-    if (!checkAdjacencyLeft(left, collapsedCell)) return false
+    if (!checkAdjacencyUp(up, collapsedCell) || !checkAdjacencyRight(right, collapsedCell) || !checkAdjacencyDown(down, collapsedCell) || !checkAdjacencyLeft(left, collapsedCell)) return false
   }
   return true
 }
@@ -154,8 +142,15 @@ function setup() {
   }
 }
 
-function mousePressed(){
-  redraw()
+let pause = false;
+function mousePressed(){ 
+  if(pause==false){
+    noLoop();
+    pause=true;
+  }else{
+    loop();
+    pause = false;
+  }
 }
 
 function draw() {
@@ -163,7 +158,12 @@ function draw() {
   for (let i = 0; i < grid.length; i++) {
     const cell = grid[i];
     if (cell.collapsed){
-      image(tiles[cell.options[0]].image, (width/DIM)*(i%DIM), (Math.floor(i/DIM))*(height/DIM), width/DIM, height/DIM)
+      try {
+        image(tiles[cell.options[0]].image, (width/DIM)*(i%DIM), (Math.floor(i/DIM))*(height/DIM), width/DIM, height/DIM)
+      } catch (err) {
+        console.log(cell)
+        console.log(canCollapse)
+      }
     } else {
       noFill();
       stroke(255);
@@ -174,6 +174,7 @@ function draw() {
   canCollapse.sort((cellA, cellB) => cellA.options.length - cellB.options.length)
   canCollapse = canCollapse.filter(cell => !cell.collapsed)
   canCollapse = canCollapse.filter(cell => cell.options.length === canCollapse[0].options.length)
+  console.log(canCollapse)
   collapseCell(random(canCollapse).position, grid)
   // noLoop()
 }
