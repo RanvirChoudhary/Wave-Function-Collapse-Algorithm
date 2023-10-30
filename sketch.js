@@ -2,7 +2,7 @@ const tileset = prompt("Which tileset do you want?")
 const tiles = [];
 const grid = [];
 let canCollapse;
-const DIM = 10;
+const DIM = Number(prompt("Dimensions"));
 
 function preload() {
   tiles[0] = { sockets: [0,0,0,0], image: loadImage(`tiles/${tileset}/blank.png`) }
