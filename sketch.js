@@ -36,12 +36,12 @@ function rotateImage(imageToRotate, num) {
 }
 
 
-async function preload() {
-  tiles[0] = { sockets: [0,0,0,0], image: await loadImage(`tiles/${tileset}/blank.png`) }
-  tiles[1] = { sockets: [1,1,0,1], image: await loadImage(`tiles/${tileset}/up.png`) }
-  tiles[2] = rotateImage(tiles[1], 1)
-  tiles[3] = rotateImage(tiles[1], 2)
-  tiles[4] = rotateImage(tiles[1], 3)
+function preload() {
+  tiles[0] = { sockets: [0,0,0,0], image: loadImage(`tiles/${tileset}/blank.png`) }
+  tiles[1] = { sockets: [1,1,0,1], image: loadImage(`tiles/${tileset}/up.png`) }
+  tiles[2] = { sockets: [1,1,1,0], image: loadImage(`tiles/${tileset}/right.png`) }
+  tiles[3] = { sockets: [0,1,1,1], image: loadImage(`tiles/${tileset}/down.png`) }
+  tiles[4] = { sockets: [1,0,1,1], image: loadImage(`tiles/${tileset}/left.png`) }
 }
 
 function checkAdjacencyUp(adjacentCell, collapsedCell){
