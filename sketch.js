@@ -4,12 +4,31 @@ const grid = [];
 let canCollapse;
 const DIM = Number(prompt("Dimensions"));
 
+// Trying to rotate image rn unable to rotate sockets 
+function rotateImage(num, imageToRotate) {
+  let finalTileObject = {sockets: [], image: imageToRotate}
+  const w = imageToRotate.image.width;
+  const h = imageToRotate.image.height;
+  const newImg = createGraphics(w, h);
+  newImg.imageMode(CENTER);
+  newImg.translate(w / 2, h / 2);
+  newImg.rotate(HALF_PI * num);
+  finalTileObject.image = newImg.image(imageToRotate.image, 0, 0);
+
+  oldSockets = imageToRotate.sockets
+  for (let i = 0; i < num; i++) {
+    oldSockets.unshift(oldSockets.pop())
+  }  
+  finalTileObject.sockets = oldSockets
+  return finalTileObject
+}
+
 function preload() {
   tiles[0] = { sockets: [0,0,0,0], image: loadImage(`tiles/${tileset}/blank.png`) }
   tiles[1] = { sockets: [1,1,0,1], image: loadImage(`tiles/${tileset}/up.png`) }
-  tiles[2] = { sockets: [1,1,1,0], image: loadImage(`tiles/${tileset}/right.png`) }
-  tiles[3] = { sockets: [0,1,1,1], image: loadImage(`tiles/${tileset}/down.png`) }
-  tiles[4] = { sockets: [1,0,1,1], image: loadImage(`tiles/${tileset}/left.png`) }
+  tiles[2] = rotateImage(1, tiles[1])
+  tiles[3] = rotateImage(2, tiles[1])
+  tiles[4] = rotateImage(3, tiles[1])
 }
 
 function checkAdjacencyUp(adjacentCell, collapsedCell){
