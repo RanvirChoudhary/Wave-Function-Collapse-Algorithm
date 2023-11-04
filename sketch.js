@@ -3,20 +3,20 @@ const tiles = [];
 const grid = [];
 let canCollapse;
 const DIM = Number(prompt("Dimensions"));
-let pause = false
+let loopPaused = false
 
 function mousePressed(){
-  if(pause==false){
+  if(loopPaused==false){
     noLoop();
-    pause=true;
+    loopPaused=true;
   }else{
     loop();
-    pause = false;
+    loopPaused = false;
   }
 }
 
 // Trying to rotate image rn unable to rotate sockets 
-function rotateImage(num, imageToRotate) {
+function rotateImage(imageToRotate, num) {
   let finalTileObject = {sockets: [], image: imageToRotate}
   const w = imageToRotate.image.width;
   const h = imageToRotate.image.height;
@@ -24,7 +24,8 @@ function rotateImage(num, imageToRotate) {
   newImg.imageMode(CENTER);
   newImg.translate(w / 2, h / 2);
   newImg.rotate(HALF_PI * num);
-  finalTileObject.image = newImg.image(imageToRotate.image, 0, 0);
+  newImg.image(imageToRotate.image, 0, 0);
+  finalTileObject.image = newImg
 
   oldSockets = imageToRotate.sockets
   for (let i = 0; i < num; i++) {
@@ -34,12 +35,13 @@ function rotateImage(num, imageToRotate) {
   return finalTileObject
 }
 
-function preload() {
-  tiles[0] = { sockets: [0,0,0,0], image: loadImage(`tiles/${tileset}/blank.png`) }
-  tiles[1] = { sockets: [1,1,0,1], image: loadImage(`tiles/${tileset}/up.png`) }
-  tiles[2] = rotateImage(1, tiles[1])
-  tiles[3] = rotateImage(2, tiles[1])
-  tiles[4] = rotateImage(3, tiles[1])
+
+async function preload() {
+  tiles[0] = { sockets: [0,0,0,0], image: await loadImage(`tiles/${tileset}/blank.png`) }
+  tiles[1] = { sockets: [1,1,0,1], image: await loadImage(`tiles/${tileset}/up.png`) }
+  tiles[2] = rotateImage(tiles[1], 1)
+  tiles[3] = rotateImage(tiles[1], 2)
+  tiles[4] = rotateImage(tiles[1], 3)
 }
 
 function checkAdjacencyUp(adjacentCell, collapsedCell){
@@ -159,6 +161,7 @@ function setup() {
       options: [0,1,2,3,4]
     }
   }
+  grid[0].sockets = [2]
 }
 
 function draw() {
@@ -178,4 +181,5 @@ function draw() {
   canCollapse = canCollapse.filter(cell => !cell.collapsed && cell.options.length !== 0)
   canCollapse = canCollapse.filter(cell => cell.options.length === canCollapse[0].options.length)
   collapseCell(random(canCollapse).position, grid)
+  // noLoop()
 }
