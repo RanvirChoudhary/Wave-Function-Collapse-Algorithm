@@ -15,25 +15,25 @@ function mousePressed(){
   }
 }
 
-// Trying to rotate image rn unable to rotate sockets 
-function rotateImage(imageToRotate, num) {
-  let finalTileObject = {sockets: [], image: imageToRotate}
-  const w = imageToRotate.image.width;
-  const h = imageToRotate.image.height;
-  const newImg = createGraphics(w, h);
-  newImg.imageMode(CENTER);
-  newImg.translate(w / 2, h / 2);
-  newImg.rotate(HALF_PI * num);
-  newImg.image(imageToRotate.image, 0, 0);
-  finalTileObject.image = newImg
+// // Trying to rotate image rn unable to rotate sockets 
+// function rotateImage(imageToRotate, num) {
+//   let finalTileObject = {sockets: [], image: imageToRotate}
+//   const w = imageToRotate.image.width;
+//   const h = imageToRotate.image.height;
+//   const newImg = createGraphics(w, h);
+//   newImg.imageMode(CENTER);
+//   newImg.translate(w / 2, h / 2);
+//   newImg.rotate(HALF_PI * num);
+//   newImg.image(imageToRotate.image, 0, 0);
+//   finalTileObject.image = newImg
 
-  oldSockets = imageToRotate.sockets
-  for (let i = 0; i < num; i++) {
-    oldSockets.unshift(oldSockets.pop())
-  }  
-  finalTileObject.sockets = oldSockets
-  return finalTileObject
-}
+//   oldSockets = imageToRotate.sockets
+//   for (let i = 0; i < num; i++) {
+//     oldSockets.unshift(oldSockets.pop())
+//   }  
+//   finalTileObject.sockets = oldSockets
+//   return finalTileObject
+// }
 
 
 function preload() {
@@ -45,6 +45,7 @@ function preload() {
 }
 
 function checkAdjacencyUp(adjacentCell, collapsedCell){
+  if (adjacentCell.collapsed) return true
   up = adjacentCell
   for (let i = 0; i < up.options.length; i++) {
     const option = up.options[i];
@@ -55,9 +56,15 @@ function checkAdjacencyUp(adjacentCell, collapsedCell){
       i -= 1
     }
   }
+  if(Array.isArray(up.options) && !up.options.length){
+    return false
+  } else {
+    return true
+  }
 }
 
 function checkAdjacencyRight(adjacentCell, collapsedCell){
+  if (adjacentCell.collapsed) return true
   right = adjacentCell
   for (let i = 0; i < right.options.length; i++) {
     const option = right.options[i];
@@ -68,9 +75,15 @@ function checkAdjacencyRight(adjacentCell, collapsedCell){
       i -= 1
     }
   }
+  if(Array.isArray(right.options) && !right.options.length){
+    return false
+  } else {
+    return true
+  }
 }
 
 function checkAdjacencyDown(adjacentCell, collapsedCell){
+  if (adjacentCell.collapsed) return true
   down = adjacentCell
   for (let i = 0; i < down.options.length; i++) {
     const option = down.options[i];
@@ -81,9 +94,15 @@ function checkAdjacencyDown(adjacentCell, collapsedCell){
       i -= 1
     }
   }
+  if(Array.isArray(down.options) && !down.options.length){
+    return false
+  } else {
+    return true
+  }
 }
 
 function checkAdjacencyLeft(adjacentCell, collapsedCell){
+  if (adjacentCell.collapsed) return true
   left = adjacentCell
   for (let i = 0; i < left.options.length; i++) {
     const option = left.options[i];
@@ -94,6 +113,11 @@ function checkAdjacencyLeft(adjacentCell, collapsedCell){
       i -= 1
     }
   }
+  if(Array.isArray(left.options) && !left.options.length){
+    return false
+  } else {
+    return true
+  }
 }
 
 function observe(cellPosition) {
@@ -103,38 +127,23 @@ function observe(cellPosition) {
   down = grid[cellPosition + DIM]
   left = grid[cellPosition - 1]
   if (cellPosition === 0){
-    checkAdjacencyRight(right, collapsedCell) 
-    checkAdjacencyDown(down, collapsedCell)
+    return checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) ? true : false
   } else if (cellPosition === DIM - 1) {
-    checkAdjacencyLeft(left, collapsedCell) 
-    checkAdjacencyDown(down, collapsedCell)
+    return checkAdjacencyLeft(left, collapsedCell) && checkAdjacencyDown(down, collapsedCell) ? true : false
   } else if (cellPosition === DIM*DIM - DIM) {
-    checkAdjacencyUp(up, collapsedCell) 
-    checkAdjacencyRight(right, collapsedCell)
+    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) ? true : false
   } else if (cellPosition === DIM*DIM - 1) {
-    checkAdjacencyUp(up, collapsedCell) 
-    checkAdjacencyLeft(left, collapsedCell)
+    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
   } else if (cellPosition < DIM) {
-    checkAdjacencyRight(right, collapsedCell) 
-    checkAdjacencyDown(down, collapsedCell) 
-    checkAdjacencyLeft(left, collapsedCell)
+    return checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
   } else if (cellPosition % DIM === DIM - 1) {
-    checkAdjacencyDown(down, collapsedCell) 
-    checkAdjacencyUp(up, collapsedCell) 
-    checkAdjacencyLeft(left, collapsedCell)
+    return checkAdjacencyDown(down, collapsedCell) && checkAdjacencyUp(up, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
   } else if (cellPosition > DIM*DIM - (DIM + 1)) {
-    checkAdjacencyUp(up, collapsedCell) 
-    checkAdjacencyRight(right, collapsedCell) 
-    checkAdjacencyLeft(left, collapsedCell)
+    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
   } else if (cellPosition % DIM === 0) {
-    checkAdjacencyUp(up, collapsedCell) 
-    checkAdjacencyRight(right, collapsedCell) 
-    checkAdjacencyDown(down, collapsedCell)
+    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) ? true : false
   } else {
-    checkAdjacencyUp(up, collapsedCell)
-    checkAdjacencyRight(right, collapsedCell) 
-    checkAdjacencyDown(down, collapsedCell) 
-    checkAdjacencyLeft(left, collapsedCell)
+    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
   }
 }
 
@@ -142,13 +151,10 @@ function collapseCell(cellPosition, grid){
   realCell = grid[cellPosition]
   realCell.collapsed = true
   finalChoice = random(realCell.options)
-  if (Array.isArray(finalChoice) && ( finalChoice[0] === undefined || !finalChoice )) {
-    noFill();
-    stroke(255,0,0);
-    rect((width/DIM)*(i%DIM), (Math.floor(i/DIM))*(height/DIM), width/DIM, height/DIM)
-  }
   realCell.options = [finalChoice]
-  observe(cellPosition)
+  if (!observe(cellPosition)){
+    console.log(cellPosition)
+  }
 }
 
 function setup() {
