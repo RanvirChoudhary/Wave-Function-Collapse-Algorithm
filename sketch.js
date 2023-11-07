@@ -46,6 +46,7 @@ function preload() {
 
 function checkAdjacencyUp(adjacentCell, collapsedCell){
   if (adjacentCell.collapsed) return true
+  if (Array.isArray(adjacentCell.options) && !adjacentCell.options.length) return false
   up = adjacentCell
   for (let i = 0; i < up.options.length; i++) {
     const option = up.options[i];
@@ -59,12 +60,14 @@ function checkAdjacencyUp(adjacentCell, collapsedCell){
   if(Array.isArray(up.options) && !up.options.length){
     return false
   } else {
+    console.log(up.position, "up options are: ", up.options, Array.isArray(up.options) && !up.options.length)
     return true
   }
 }
 
 function checkAdjacencyRight(adjacentCell, collapsedCell){
   if (adjacentCell.collapsed) return true
+  if (Array.isArray(adjacentCell.options) && !adjacentCell.options.length) return false
   right = adjacentCell
   for (let i = 0; i < right.options.length; i++) {
     const option = right.options[i];
@@ -78,12 +81,14 @@ function checkAdjacencyRight(adjacentCell, collapsedCell){
   if(Array.isArray(right.options) && !right.options.length){
     return false
   } else {
+    console.log(right.position, "right options are: ", right.options, Array.isArray(right.options) && !right.options.length)
     return true
   }
 }
 
 function checkAdjacencyDown(adjacentCell, collapsedCell){
   if (adjacentCell.collapsed) return true
+  if (Array.isArray(adjacentCell.options) && !adjacentCell.options.length) return false
   down = adjacentCell
   for (let i = 0; i < down.options.length; i++) {
     const option = down.options[i];
@@ -97,12 +102,14 @@ function checkAdjacencyDown(adjacentCell, collapsedCell){
   if(Array.isArray(down.options) && !down.options.length){
     return false
   } else {
+    console.log(down.position, "down options are: ", down.options, Array.isArray(down.options) && !down.options.length)
     return true
   }
 }
 
 function checkAdjacencyLeft(adjacentCell, collapsedCell){
   if (adjacentCell.collapsed) return true
+  if (Array.isArray(adjacentCell.options) && !adjacentCell.options.length) return false
   left = adjacentCell
   for (let i = 0; i < left.options.length; i++) {
     const option = left.options[i];
@@ -116,6 +123,7 @@ function checkAdjacencyLeft(adjacentCell, collapsedCell){
   if(Array.isArray(left.options) && !left.options.length){
     return false
   } else {
+    console.log(left.position, "Left options are: ", left.options, Array.isArray(left.options) && !left.options.length)
     return true
   }
 }
@@ -174,6 +182,7 @@ function draw() {
   background(0);
   for (let i = 0; i < grid.length; i++) {
     const cell = grid[i];
+    if (!cell.options.length) console.log(cell.position, "to be sent to the gulag")
     if (cell.collapsed){
       image(tiles[cell.options[0]].image, (width/DIM)*(i%DIM), (Math.floor(i/DIM))*(height/DIM), width/DIM, height/DIM)
     } else {
