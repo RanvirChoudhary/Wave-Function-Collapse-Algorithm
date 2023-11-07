@@ -175,7 +175,6 @@ function setup() {
       options: [0,1,2,3,4]
     }
   }
-  grid[0].sockets = [2]
 }
 
 function draw() {
