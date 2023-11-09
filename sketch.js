@@ -74,44 +74,44 @@ function checkAdjacency(adjacentCell, collapsedCell, adjacentSocket, collapsedSo
 //left 3,1
 
 function observe(cellPosition) {
-  collapsedCell = grid[cellPosition]
+  let collapsedCell = grid[cellPosition]
   up = grid[cellPosition - DIM]
   right = grid[cellPosition + 1]
   down = grid[cellPosition + DIM]
   left = grid[cellPosition - 1]
   if (cellPosition === 0){
-    checkAdjacency(right, collapsedCell, 1, 3) 
-    checkAdjacency(down, collapsedCell, 2, 0)
+    checkAdjacency(right, collapsedCell, 3, 1) 
+    checkAdjacency(down, collapsedCell, 0, 2)
   } else if (cellPosition === DIM - 1) {
-    checkAdjacency(left, collapsedCell, 3,1) 
-    checkAdjacency(down, collapsedCell, 2, 0)
+    checkAdjacency(left, collapsedCell, 1,3) 
+    checkAdjacency(down, collapsedCell, 0, 2)
   } else if (cellPosition === DIM*DIM - DIM) {
-    checkAdjacency(up, collapsedCell, 0, 2) 
-    checkAdjacency(right, collapsedCell, 1, 3) 
+    checkAdjacency(up, collapsedCell, 2, 0) 
+    checkAdjacency(right, collapsedCell, 3, 1) 
   } else if (cellPosition === DIM*DIM - 1) {
-    checkAdjacency(up, collapsedCell, 0, 2) 
-    checkAdjacency(left, collapsedCell, 3,1) 
+    checkAdjacency(up, collapsedCell, 2, 0) 
+    checkAdjacency(left, collapsedCell, 1,3) 
   } else if (cellPosition < DIM) {
-    checkAdjacency(right, collapsedCell, 1, 3)
-    checkAdjacency(down, collapsedCell, 2, 0) 
-    checkAdjacency(left, collapsedCell, 3,1)
+    checkAdjacency(right, collapsedCell, 3, 1)
+    checkAdjacency(down, collapsedCell, 0, 2) 
+    checkAdjacency(left, collapsedCell, 1,3)
   } else if (cellPosition % DIM === DIM - 1) {
-    checkAdjacency(down, collapsedCell, 2, 0) 
-    checkAdjacency(up, collapsedCell, 0, 2) 
-    checkAdjacency(left, collapsedCell, 3,1)
+    checkAdjacency(down, collapsedCell, 0, 2) 
+    checkAdjacency(up, collapsedCell, 2, 0) 
+    checkAdjacency(left, collapsedCell, 1,3)
   } else if (cellPosition > DIM*DIM - (DIM + 1)) {
-    checkAdjacency(up, collapsedCell, 0, 2) 
-    checkAdjacency(right, collapsedCell, 1, 3)
-    checkAdjacency(left, collapsedCell, 3,1)
+    checkAdjacency(up, collapsedCell, 2, 0) 
+    checkAdjacency(right, collapsedCell, 3, 1)
+    checkAdjacency(left, collapsedCell, 1,3)
   } else if (cellPosition % DIM === 0) {
-    checkAdjacency(up, collapsedCell, 0, 2) 
-    checkAdjacency(right, collapsedCell, 1, 3)
-    checkAdjacency(down, collapsedCell, 2, 0)
+    checkAdjacency(up, collapsedCell, 2, 0) 
+    checkAdjacency(right, collapsedCell, 3, 1)
+    checkAdjacency(down, collapsedCell, 0, 2)
   } else {
-    checkAdjacency(up, collapsedCell, 0, 2) 
-    checkAdjacency(right, collapsedCell, 1, 3)
-    checkAdjacency(down, collapsedCell, 2, 0)
-    checkAdjacency(left, collapsedCell, 3,1)
+    checkAdjacency(up, collapsedCell, 2, 0) 
+    checkAdjacency(right, collapsedCell, 3, 1)
+    checkAdjacency(down, collapsedCell, 0, 2)
+    checkAdjacency(left, collapsedCell, 1,3)
   }
 }
 
