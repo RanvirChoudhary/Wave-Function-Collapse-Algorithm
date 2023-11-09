@@ -5,6 +5,16 @@ let canCollapse;
 const DIM = Number(prompt("Dimensions"));
 let loopPaused = false
 
+function newGrid(grid){
+  for (let i = 0; i < DIM*DIM; i++) {
+    grid[i] = {
+      position: i,
+      collapsed: false,
+      options: [0,1,2,3,4]
+    }
+  }
+}
+
 function mousePressed(){
   if(loopPaused==false){
     noLoop();
@@ -57,11 +67,6 @@ function checkAdjacencyUp(adjacentCell, collapsedCell){
       i -= 1
     }
   }
-  if(!up.options.length){
-    return false
-  } else {
-    return true
-  }
 }
 
 function checkAdjacencyRight(adjacentCell, collapsedCell){
@@ -76,11 +81,6 @@ function checkAdjacencyRight(adjacentCell, collapsedCell){
       right.options.splice(i, 1)
       i -= 1
     }
-  }
-  if(!right.options.length){
-    return false
-  } else {
-    return true
   }
 }
 
@@ -97,11 +97,6 @@ function checkAdjacencyDown(adjacentCell, collapsedCell){
       i -= 1
     }
   }
-  if(!down.options.length){
-    return false
-  } else {
-    return true
-  }
 }
 
 function checkAdjacencyLeft(adjacentCell, collapsedCell){
@@ -117,11 +112,6 @@ function checkAdjacencyLeft(adjacentCell, collapsedCell){
       i -= 1
     }
   }
-  if(!left.options.length){
-    return false
-  } else {
-    return true
-  }
 }
 
 function observe(cellPosition) {
@@ -131,23 +121,38 @@ function observe(cellPosition) {
   down = grid[cellPosition + DIM]
   left = grid[cellPosition - 1]
   if (cellPosition === 0){
-    return checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) ? true : false
+    checkAdjacencyRight(right, collapsedCell) 
+    checkAdjacencyDown(down, collapsedCell)
   } else if (cellPosition === DIM - 1) {
-    return checkAdjacencyLeft(left, collapsedCell) && checkAdjacencyDown(down, collapsedCell) ? true : false
+    checkAdjacencyLeft(left, collapsedCell) 
+    checkAdjacencyDown(down, collapsedCell)
   } else if (cellPosition === DIM*DIM - DIM) {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) ? true : false
+    checkAdjacencyUp(up, collapsedCell) 
+    checkAdjacencyRight(right, collapsedCell)
   } else if (cellPosition === DIM*DIM - 1) {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacencyUp(up, collapsedCell) 
+    checkAdjacencyLeft(left, collapsedCell)
   } else if (cellPosition < DIM) {
-    return checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacencyRight(right, collapsedCell) 
+    checkAdjacencyDown(down, collapsedCell) 
+    checkAdjacencyLeft(left, collapsedCell)
   } else if (cellPosition % DIM === DIM - 1) {
-    return checkAdjacencyDown(down, collapsedCell) && checkAdjacencyUp(up, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacencyDown(down, collapsedCell) 
+    checkAdjacencyUp(up, collapsedCell) 
+    checkAdjacencyLeft(left, collapsedCell)
   } else if (cellPosition > DIM*DIM - (DIM + 1)) {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacencyUp(up, collapsedCell) 
+    checkAdjacencyRight(right, collapsedCell) 
+    checkAdjacencyLeft(left, collapsedCell)
   } else if (cellPosition % DIM === 0) {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) ? true : false
+    checkAdjacencyUp(up, collapsedCell) 
+    checkAdjacencyRight(right, collapsedCell) 
+    checkAdjacencyDown(down, collapsedCell)
   } else {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacencyUp(up, collapsedCell) 
+    checkAdjacencyRight(right, collapsedCell) 
+    checkAdjacencyDown(down, collapsedCell) 
+    checkAdjacencyLeft(left, collapsedCell)
   }
 }
 
@@ -156,28 +161,20 @@ function collapseCell(cellPosition, grid){
   realCell.collapsed = true
   finalChoice = random(realCell.options)
   realCell.options = [finalChoice]
-  observeNotFine = !observe(cellPosition)
-  if (observeNotFine){
-    console.log("Eliminated")
-  }
+  observe(cellPosition)
 }
 
 function setup() {
   let canvas = createCanvas(850, 850);
   canvas.position(windowWidth / 2 - 450, windowHeight / 2 - 425)
-  for (let i = 0; i < DIM*DIM; i++) {
-    grid[i] = {
-      position: i,
-      collapsed: false,
-      options: [0,1,2,3,4]
-    }
-  }
+  newGrid(grid)
 }
 
 function draw() {
   background(0);
   for (let i = 0; i < grid.length; i++) {
     const cell = grid[i];
+    if(!cell.options.length) newGrid(grid)
     if (cell.collapsed){
       image(tiles[cell.options[0]].image, (width/DIM)*(i%DIM), (Math.floor(i/DIM))*(height/DIM), width/DIM, height/DIM)
     } else {
@@ -191,5 +188,4 @@ function draw() {
   canCollapse = canCollapse.filter(cell => !cell.collapsed && cell.options.length !== 0)
   canCollapse = canCollapse.filter(cell => cell.options.length === canCollapse[0].options.length)
   collapseCell(random(canCollapse).position, grid)
-  // noLoop()
 }
