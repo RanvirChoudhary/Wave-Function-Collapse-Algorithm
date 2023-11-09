@@ -5,6 +5,16 @@ let canCollapse;
 const DIM = Number(prompt("Dimensions"));
 let loopPaused = false
 
+function newGrid(grid){
+  for (let i = 0; i < DIM*DIM; i++) {
+    grid[i] = {
+      position: i,
+      collapsed: false,
+      options: [0,1,2,3,4]
+    }
+  }
+}
+
 function mousePressed(){
   if(loopPaused==false){
     noLoop();
@@ -44,89 +54,24 @@ function preload() {
   tiles[4] = { sockets: [1,0,1,1], image: loadImage(`tiles/${tileset}/left.png`) }
 }
 
-function checkAdjacencyUp(adjacentCell, collapsedCell){
+function checkAdjacency(adjacentCell, collapsedCell, adjacentSocket, collapsedSocket){
   if (adjacentCell.collapsed) return true
-  if (Array.isArray(adjacentCell.options) && !adjacentCell.options.length) return false
-  up = adjacentCell
-  for (let i = 0; i < up.options.length; i++) {
-    const option = up.options[i];
-    let collapsedUpSocket = tiles[collapsedCell.options[0]].sockets[0]
-    let upDownSocket = tiles[option].sockets[2]
-    if (collapsedUpSocket != upDownSocket) {
-      up.options.splice(i, 1)
+  if (!adjacentCell.options.length) return false
+  for (let i = 0; i < adjacentCell.options.length; i++) {
+    const option = adjacentCell.options[i];
+    let collapsedRespectiveSocket = tiles[collapsedCell.options[0]].sockets[collapsedSocket]
+    let adjacentRespectiveSocket = tiles[option].sockets[adjacentSocket]
+    if (collapsedRespectiveSocket != adjacentRespectiveSocket) {
+      adjacentCell.options.splice(i, 1)
       i -= 1
     }
-  }
-  if(Array.isArray(up.options) && !up.options.length){
-    return false
-  } else {
-    console.log(up.position, "up options are: ", up.options, Array.isArray(up.options) && !up.options.length)
-    return true
   }
 }
 
-function checkAdjacencyRight(adjacentCell, collapsedCell){
-  if (adjacentCell.collapsed) return true
-  if (Array.isArray(adjacentCell.options) && !adjacentCell.options.length) return false
-  right = adjacentCell
-  for (let i = 0; i < right.options.length; i++) {
-    const option = right.options[i];
-    let collapsedRightSocket = tiles[collapsedCell.options[0]].sockets[1]
-    let rightLeftSocket = tiles[option].sockets[3]
-    if (collapsedRightSocket != rightLeftSocket) {
-      right.options.splice(i, 1)
-      i -= 1
-    }
-  }
-  if(Array.isArray(right.options) && !right.options.length){
-    return false
-  } else {
-    console.log(right.position, "right options are: ", right.options, Array.isArray(right.options) && !right.options.length)
-    return true
-  }
-}
-
-function checkAdjacencyDown(adjacentCell, collapsedCell){
-  if (adjacentCell.collapsed) return true
-  if (Array.isArray(adjacentCell.options) && !adjacentCell.options.length) return false
-  down = adjacentCell
-  for (let i = 0; i < down.options.length; i++) {
-    const option = down.options[i];
-    let collapsedDownSocket = tiles[collapsedCell.options[0]].sockets[2]
-    let downUpSocket = tiles[option].sockets[0]
-    if (collapsedDownSocket != downUpSocket) {
-      down.options.splice(i, 1)
-      i -= 1
-    }
-  }
-  if(Array.isArray(down.options) && !down.options.length){
-    return false
-  } else {
-    console.log(down.position, "down options are: ", down.options, Array.isArray(down.options) && !down.options.length)
-    return true
-  }
-}
-
-function checkAdjacencyLeft(adjacentCell, collapsedCell){
-  if (adjacentCell.collapsed) return true
-  if (Array.isArray(adjacentCell.options) && !adjacentCell.options.length) return false
-  left = adjacentCell
-  for (let i = 0; i < left.options.length; i++) {
-    const option = left.options[i];
-    let collapsedLeftSocket = tiles[collapsedCell.options[0]].sockets[3]
-    let leftRightSocket = tiles[option].sockets[1]
-    if (collapsedLeftSocket != leftRightSocket) {
-      left.options.splice(i, 1)
-      i -= 1
-    }
-  }
-  if(Array.isArray(left.options) && !left.options.length){
-    return false
-  } else {
-    console.log(left.position, "Left options are: ", left.options, Array.isArray(left.options) && !left.options.length)
-    return true
-  }
-}
+//up 0,2
+//right 1,3
+//down 2,0
+//left 3,1
 
 function observe(cellPosition) {
   collapsedCell = grid[cellPosition]
@@ -135,23 +80,38 @@ function observe(cellPosition) {
   down = grid[cellPosition + DIM]
   left = grid[cellPosition - 1]
   if (cellPosition === 0){
-    return checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) ? true : false
+    checkAdjacency(right, collapsedCell, 1, 3) 
+    checkAdjacency(down, collapsedCell, 2, 0)
   } else if (cellPosition === DIM - 1) {
-    return checkAdjacencyLeft(left, collapsedCell) && checkAdjacencyDown(down, collapsedCell) ? true : false
+    checkAdjacency(left, collapsedCell, 3,1) 
+    checkAdjacency(down, collapsedCell, 2, 0)
   } else if (cellPosition === DIM*DIM - DIM) {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) ? true : false
+    checkAdjacency(up, collapsedCell, 0, 2) 
+    checkAdjacency(right, collapsedCell, 1, 3) 
   } else if (cellPosition === DIM*DIM - 1) {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacency(up, collapsedCell, 0, 2) 
+    checkAdjacency(left, collapsedCell, 3,1) 
   } else if (cellPosition < DIM) {
-    return checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacency(right, collapsedCell, 1, 3)
+    checkAdjacency(down, collapsedCell, 2, 0) 
+    checkAdjacency(left, collapsedCell, 3,1)
   } else if (cellPosition % DIM === DIM - 1) {
-    return checkAdjacencyDown(down, collapsedCell) && checkAdjacencyUp(up, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacency(down, collapsedCell, 2, 0) 
+    checkAdjacency(up, collapsedCell, 0, 2) 
+    checkAdjacency(left, collapsedCell, 3,1)
   } else if (cellPosition > DIM*DIM - (DIM + 1)) {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacency(up, collapsedCell, 0, 2) 
+    checkAdjacency(right, collapsedCell, 1, 3)
+    checkAdjacency(left, collapsedCell, 3,1)
   } else if (cellPosition % DIM === 0) {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) ? true : false
+    checkAdjacency(up, collapsedCell, 0, 2) 
+    checkAdjacency(right, collapsedCell, 1, 3)
+    checkAdjacency(down, collapsedCell, 2, 0)
   } else {
-    return checkAdjacencyUp(up, collapsedCell) && checkAdjacencyRight(right, collapsedCell) && checkAdjacencyDown(down, collapsedCell) && checkAdjacencyLeft(left, collapsedCell) ? true : false
+    checkAdjacency(up, collapsedCell, 0, 2) 
+    checkAdjacency(right, collapsedCell, 1, 3)
+    checkAdjacency(down, collapsedCell, 2, 0)
+    checkAdjacency(left, collapsedCell, 3,1)
   }
 }
 
@@ -160,28 +120,20 @@ function collapseCell(cellPosition, grid){
   realCell.collapsed = true
   finalChoice = random(realCell.options)
   realCell.options = [finalChoice]
-  if (!observe(cellPosition)){
-    console.log(cellPosition)
-  }
+  observe(cellPosition)
 }
 
 function setup() {
   let canvas = createCanvas(850, 850);
   canvas.position(windowWidth / 2 - 450, windowHeight / 2 - 425)
-  for (let i = 0; i < DIM*DIM; i++) {
-    grid[i] = {
-      position: i,
-      collapsed: false,
-      options: [0,1,2,3,4]
-    }
-  }
+  newGrid(grid)
 }
 
 function draw() {
   background(0);
   for (let i = 0; i < grid.length; i++) {
     const cell = grid[i];
-    if (!cell.options.length) console.log(cell.position, "to be sent to the gulag")
+    if(!cell.options.length) newGrid(grid)
     if (cell.collapsed){
       image(tiles[cell.options[0]].image, (width/DIM)*(i%DIM), (Math.floor(i/DIM))*(height/DIM), width/DIM, height/DIM)
     } else {
@@ -195,5 +147,4 @@ function draw() {
   canCollapse = canCollapse.filter(cell => !cell.collapsed && cell.options.length !== 0)
   canCollapse = canCollapse.filter(cell => cell.options.length === canCollapse[0].options.length)
   collapseCell(random(canCollapse).position, grid)
-  // noLoop()
 }
