@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Wave Function Collapse</title>
+</head>
+<body>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vue-router@4"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js",
+        "vue-router": "https://unpkg.com/vue-router@4"
+      }
+    }
+  </script>
+  <div id = "app">
+    <div :class = "{ notActive: !showTileChoice}" class="options-grid">
+        <div @click=setTile("Elementary") class="option">
+          <img width="80" height="80" src="./tiles/elementary/up.png" alt="">
+          <p id="Elementary">Elementary</p>
+        </div>
+        <div @click=setTile("Tracks") class="option">
+          <img width="80" height="80" src="./tiles/tracks/up.png" alt="">
+          <p id="Tracks">Tracks</p>
+        </div>
+        <div @click=setTile("Mountains") class="option">
+          <img width="80" height="80" src="./tiles/mountains/up.png" alt="">
+          <p id="Mountains">Mountains</p>
+        </div>
+        <div @click=setTile("Pipes") class="option">
+          <img width="80" height="80" src="./tiles/pipes/up.png" alt="">
+          <p id="pipes">Pipes</p>
+        </div>
+        <div @click=setTile("Polka") class="option">
+          <img width="80" height="80" src="./tiles/polka/up.png" alt="">
+          <p id="Polka">Polka</p>
+        </div>
+        <div @click=setTile("Roads") class="option">
+          <img width="80" height="80" src="./tiles/roads/up.png" alt="">
+          <p id="Roads">Roads</p>
+        </div>
+    </div>
+    <div class = "form" :class="{ notActive: !showDimInput }">
+      <h1>Enter the dimensions for the grid</h1>
+      <input v-model="dim" class="dim-input" type="text">
+      <button @click=redirect class="submit-dim">Generate!</button>
+    </div>
+  </div>
+  <script src="home.js"></script>  
+</body>
+</html>

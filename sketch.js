@@ -1,8 +1,9 @@
-const tileset = prompt("Which tileset do you want?")
+const urlParams = new URLSearchParams(window.location.search);
+const tileset = urlParams.get('tileset').toLowerCase();
+const DIM = Number(urlParams.get('dim'));
 const tiles = [];
 const grid = [];
 let canCollapse;
-const DIM = Number(prompt("Dimensions"));
 let loopPaused = false
 
 function newGrid(grid){
