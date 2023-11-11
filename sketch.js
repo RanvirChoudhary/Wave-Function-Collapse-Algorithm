@@ -6,6 +6,11 @@ const grid = [];
 let canCollapse;
 let loopPaused = false
 
+function preload() {
+  tiles[0] = { sockets: [0,0,0,0], image: loadImage(`tiles/${tileset}/blank.png`) }
+  tiles[1] = { sockets: [1,1,0,1], image: loadImage(`tiles/${tileset}/up.png`) }
+}
+
 function newGrid(grid){
   for (let i = 0; i < DIM*DIM; i++) {
     grid[i] = {
@@ -26,38 +31,29 @@ function mousePressed(){
   }
 }
 
-// // Trying to rotate image rn unable to rotate sockets 
-// function rotateImage(imageToRotate, num) {
-//   let finalTileObject = {sockets: [], image: imageToRotate}
-//   const w = imageToRotate.image.width;
-//   const h = imageToRotate.image.height;
-//   const newImg = createGraphics(w, h);
-//   newImg.imageMode(CENTER);
-//   newImg.translate(w / 2, h / 2);
-//   newImg.rotate(HALF_PI * num);
-//   newImg.image(imageToRotate.image, 0, 0);
-//   finalTileObject.image = newImg
+function rotateImage(imageToRotate, num) {
+  let finalTileObject = { sockets: [], image: imageToRotate.image }
+  const w = imageToRotate.image.width;
+  const h = imageToRotate.image.height;
+  const newImg = createGraphics(w, h);
+  newImg.imageMode(CENTER);
+  newImg.translate(w / 2, h / 2);
+  newImg.rotate(HALF_PI * num);
+  newImg.image(imageToRotate.image, 0, 0);
 
-//   oldSockets = imageToRotate.sockets
-//   for (let i = 0; i < num; i++) {
-//     oldSockets.unshift(oldSockets.pop())
-//   }  
-//   finalTileObject.sockets = oldSockets
-//   return finalTileObject
-// }
-
-
-function preload() {
-  tiles[0] = { sockets: [0,0,0,0], image: loadImage(`tiles/${tileset}/blank.png`) }
-  tiles[1] = { sockets: [1,1,0,1], image: loadImage(`tiles/${tileset}/up.png`) }
-  tiles[2] = { sockets: [1,1,1,0], image: loadImage(`tiles/${tileset}/right.png`) }
-  tiles[3] = { sockets: [0,1,1,1], image: loadImage(`tiles/${tileset}/down.png`) }
-  tiles[4] = { sockets: [1,0,1,1], image: loadImage(`tiles/${tileset}/left.png`) }
+  newSockets = structuredClone(imageToRotate.sockets)
+  for (let i = 0; i < num; i++) {
+    newSockets.unshift(newSockets.pop())
+  }  
+  finalTileObject.sockets = newSockets
+  finalTileObject.image = newImg
+  return finalTileObject
 }
+
+
 
 function checkAdjacency(adjacentCell, collapsedCell, adjacentSocket, collapsedSocket){
   if (adjacentCell.collapsed) return true
-  if (!adjacentCell.options.length) return false
   for (let i = 0; i < adjacentCell.options.length; i++) {
     const option = adjacentCell.options[i];
     let collapsedRespectiveSocket = tiles[collapsedCell.options[0]].sockets[collapsedSocket]
@@ -68,11 +64,6 @@ function checkAdjacency(adjacentCell, collapsedCell, adjacentSocket, collapsedSo
     }
   }
 }
-
-//up 0,2
-//right 1,3
-//down 2,0
-//left 3,1
 
 function observe(cellPosition) {
   let collapsedCell = grid[cellPosition]
@@ -119,8 +110,7 @@ function observe(cellPosition) {
 function collapseCell(cellPosition, grid){
   realCell = grid[cellPosition]
   realCell.collapsed = true
-  finalChoice = random(realCell.options)
-  realCell.options = [finalChoice]
+  realCell.options = [random(realCell.options)]
   observe(cellPosition)
 }
 
@@ -128,6 +118,9 @@ function setup() {
   let canvas = createCanvas(850, 850);
   canvas.position(windowWidth / 2 - 450, windowHeight / 2 - 425)
   newGrid(grid)
+  tiles[2] = rotateImage(tiles[1], 1)
+  tiles[3] = rotateImage(tiles[1], 2)
+  tiles[4] = rotateImage(tiles[1], 3)
 }
 
 function draw() {
@@ -143,6 +136,7 @@ function draw() {
       rect((width/DIM)*(i%DIM), (Math.floor(i/DIM))*(height/DIM), width/DIM, height/DIM)
     }
   }
+  
   canCollapse = structuredClone(grid)
   canCollapse.sort((cellA, cellB) => cellA.options.length - cellB.options.length)
   canCollapse = canCollapse.filter(cell => !cell.collapsed && cell.options.length !== 0)
