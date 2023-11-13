@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;1,500;1,600&display=swap');
 
 body,html {
   margin: 0;
@@ -11,25 +11,39 @@ body,html {
 
 body {
   background: linear-gradient(to bottom, #07a3b2, #d9ecc7);
-  font-family: "Poppins";
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: italic;
   height: 100vh
 }
 
 .options-grid {
   padding: 30px;
-  height: 700px;
-  width: 800px;
+  height: 850px;
+  width: 1200px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   place-items: center;
 }
 
+.dim-input:focus {
+  outline:none;
+}
+
+
 .option {
-  width: 200px;
-  height: 200px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  width: 300px;
+  height: 300px;
   text-align: center;
-  font-size: 20px;
+  font-size: 30px;
   place-self: center;
 }
 
@@ -55,17 +69,21 @@ body {
   align-items: center;
 }
 
-p:hover{
+.option:hover{
+  background-color: rgba(0, 0, 0, 0.3);
   color: white;
   cursor: pointer;
 }
 
 .form {
+  height: 400px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin-top: -50px;
+  height: 500px;
 }
 
 .notActive {
@@ -73,22 +91,27 @@ p:hover{
 }
 
 .dim-input {
+  position: relative;
+  bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
   padding-top: 30px;
   padding-bottom: 30px;
   padding-right: 40px;
+  border: #00000004 solid;
   margin: 20px;
-  width: 300px;
-  height: 50px;
+  width: 500px;
+  height: 70px;
   font-size: 50px;
   background-color: rgba(0, 0, 0, 0);
-  border: #00000020 solid;
 }
 
 .submit-dim {
   line-height: 50px;
-  height: 50px;
+  height: 100px;
+  font-size: 30px;
   text-align: center;
-  width: 200px;
+  width: 300px;
   cursor: pointer;
   border: none;
   background-color: rgba(0, 0, 0, 0);
@@ -140,7 +163,18 @@ p:hover{
   transition: all 0.3s;
   background-color: rgba(255,255,255,0);
 }
+
 .submit-dim:hover::after {
   opacity: 0; 
   transform: scale(0.1, 1);
+}
+
+.tile-preview {
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.form-instructions {
+  font-size: 40px;
+  /* margin-bottom: 100px; */
 }

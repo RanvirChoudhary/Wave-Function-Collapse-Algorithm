@@ -19,32 +19,32 @@
   <div id = "app">
     <div :class = "{ notActive: !showTileChoice}" class="options-grid">
         <div @click=setTile("Elementary") class="option">
-          <img width="80" height="80" src="./tiles/elementary/up.png" alt="">
-          <p id="Elementary">Elementary</p>
+          <img class="tile-preview" width="150" height="150" src="./tiles/elementary/up.png" alt="">
+          <p>Elementary</p>
         </div>
         <div @click=setTile("Tracks") class="option">
-          <img width="80" height="80" src="./tiles/tracks/up.png" alt="">
-          <p id="Tracks">Tracks</p>
+          <img class="tile-preview" width="150" height="150" src="./tiles/tracks/up.png" alt="">
+          <p>Tracks</p>
         </div>
         <div @click=setTile("Mountains") class="option">
-          <img width="80" height="80" src="./tiles/mountains/up.png" alt="">
-          <p id="Mountains">Mountains</p>
+          <img class="tile-preview" width="150" height="150" src="./tiles/mountains/up.png" alt="">
+          <p>Mountains</p>
         </div>
         <div @click=setTile("Pipes") class="option">
-          <img width="80" height="80" src="./tiles/pipes/up.png" alt="">
-          <p id="pipes">Pipes</p>
+          <img class="tile-preview" width="150" height="150" src="./tiles/pipes/up.png" alt="">
+          <p>Pipes</p>
         </div>
         <div @click=setTile("Polka") class="option">
-          <img width="80" height="80" src="./tiles/polka/up.png" alt="">
-          <p id="Polka">Polka</p>
+          <img class="tile-preview" width="150" height="150" src="./tiles/polka/up.png" alt="">
+          <p>Polka</p>
         </div>
         <div @click=setTile("Roads") class="option">
-          <img width="80" height="80" src="./tiles/roads/up.png" alt="">
-          <p id="Roads">Roads</p>
+          <img class="tile-preview" width="150" height="150" src="./tiles/roads/up.png" alt="">
+          <p>Roads</p>
         </div>
     </div>
     <div class = "form" :class="{ notActive: !showDimInput }">
-      <h1>Enter the dimensions for the grid</h1>
+      <h1 class="form-instructions">Enter the dimensions for the grid</h1>
       <input v-model="dim" class="dim-input" type="text">
       <button @click=redirect class="submit-dim">Generate!</button>
     </div>
