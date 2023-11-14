@@ -1,22 +1,60 @@
 const urlParams = new URLSearchParams(window.location.search);
 const tileset = urlParams.get('tileset').toLowerCase();
 const DIM = Number(urlParams.get('dim'));
-const tiles = [];
+let tiles = [];
 const grid = [];
 let canCollapse;
 let loopPaused = false
+let tilesTill = "throws an error if not set"
+tries = 1
+
+function loadTiles(tileChosen, tiles) {
+  const path = `./tiles/${tileChosen}`
+  // remember to not have uppercase names in the conditions
+  if (tileChosen === "circuit") {
+    tiles[0] = { sockets: ["DDD", "DDD", "DDD", "DDD"], image: loadImage("tiles/circuit-coding-train/0.png"), rotations: 0 }
+    tiles[1] = { sockets: ["PPP", "PPP", "PPP", "PPP"], image: loadImage("tiles/circuit-coding-train/1.png"), rotations: 0 }
+    tiles[2] = { sockets: ["PPP", "PLP", "PPP", "PPP"], image: loadImage("tiles/circuit-coding-train/2.png"), rotations: 4 }
+    tiles[3] = { sockets: ["PPP", "PCP", "PPP", "PCP"], image: loadImage("tiles/circuit-coding-train/3.png"), rotations: 2 }
+    tiles[4] = { sockets: ["DPP", "PLP", "PPD", "DDD"], image: loadImage("tiles/circuit-coding-train/4.png"), rotations: 4 }
+    tiles[5] = { sockets: ["DPP", "PPP", "PPP", "PPD"], image: loadImage("tiles/circuit-coding-train/5.png"), rotations: 4 }
+    tiles[6] = { sockets: ["PPP", "PLP", "PPP", "PLP"], image: loadImage("tiles/circuit-coding-train/6.png"), rotations: 2 }
+    tiles[7] = { sockets: ["PCP", "PLP", "PCP", "PLP"], image: loadImage("tiles/circuit-coding-train/7.png"), rotations: 2 }
+    tiles[8] = { sockets: ["PCP", "PPP", "PLP", "PPP"], image: loadImage("tiles/circuit-coding-train/8.png"), rotations: 4 }
+    tiles[9] = { sockets: ["PLP", "PLP", "PPP", "PLP"], image: loadImage("tiles/circuit-coding-train/9.png"), rotations: 4 }
+    tiles[10] = { sockets: ["PLP", "PLP", "PLP", "PLP"], image: loadImage("tiles/circuit-coding-train/10.png"), rotations: 2 }
+    tiles[11] = { sockets: ["PLP", "PLP", "PPP", "PPP"], image: loadImage("tiles/circuit-coding-train/11.png"), rotations: 4 }
+    tiles[12] = { sockets: ["PPP", "PLP", "PPP", "PLP"], image: loadImage("tiles/circuit-coding-train/12.png"), rotations: 2 }
+    tiles[13] = { sockets: ["PPP", "PPD", "DPP", "PLP"], image: loadImage("tiles/circuit-coding-train/13.png"), rotations: 4 }
+    tiles[14] = { sockets: ["DPP", "PLP", "PPP", "PPD"], image: loadImage("tiles/circuit-coding-train/14.png"), rotations: 4 }
+    tiles[15] = { sockets: ["PPP", "PLP", "PCP", "PPP"], image: loadImage("tiles/circuit-coding-train/15.png"), rotations: 4 }
+    tiles[16] = { sockets: ["PCP", "PLP", "PPP", "PPP"], image: loadImage("tiles/circuit-coding-train/16.png"), rotations: 4 }
+    tilesTill = 52
+  } else if (tileChosen === "grit-kit") {
+    // load grit-kit(53 tiles 🤯)
+  } else if (tileChosen === "rails") {
+    // load rails
+  } else {
+    tiles[0] = { sockets: [0,0,0,0], image: loadImage(`${path}/blank.png`), rotations: 0 }
+    tiles[1] = { sockets: [1,1,0,1], image: loadImage(`${path}/up.png`), rotations: 4 }
+    tilesTill = 5
+  }
+}
 
 function preload() {
-  tiles[0] = { sockets: [0,0,0,0], image: loadImage(`tiles/${tileset}/blank.png`) }
-  tiles[1] = { sockets: [1,1,0,1], image: loadImage(`tiles/${tileset}/up.png`) }
+  loadTiles(tileset, tiles)
 }
 
 function newGrid(grid){
   for (let i = 0; i < DIM*DIM; i++) {
+    let options = []
+    for (let j = 0; j < tilesTill; j++) {
+      options[j] = j      
+    }
     grid[i] = {
       position: i,
       collapsed: false,
-      options: [0,1,2,3,4]
+      options
     }
   }
 }
@@ -57,7 +95,7 @@ function checkAdjacency(adjacentCell, collapsedCell, adjacentSocket, collapsedSo
   for (let i = 0; i < adjacentCell.options.length; i++) {
     const option = adjacentCell.options[i];
     let collapsedRespectiveSocket = tiles[collapsedCell.options[0]].sockets[collapsedSocket]
-    let adjacentRespectiveSocket = tiles[option].sockets[adjacentSocket]
+    let adjacentRespectiveSocket = tiles[option].sockets[adjacentSocket].split("").reverse().join("")
     if (collapsedRespectiveSocket != adjacentRespectiveSocket) {
       adjacentCell.options.splice(i, 1)
       i -= 1
@@ -118,16 +156,29 @@ function setup() {
   let canvas = createCanvas(850, 850);
   canvas.position(windowWidth / 2 - 450, windowHeight / 2 - 425)
   newGrid(grid)
-  tiles[2] = rotateImage(tiles[1], 1)
-  tiles[3] = rotateImage(tiles[1], 2)
-  tiles[4] = rotateImage(tiles[1], 3)
+  initialTilesLength = tiles.length
+  let tempTiles = []
+  for (let i = 0; i < initialTilesLength; i++) {
+    const tile = tiles[i];
+    for (let j = 1; j < tile.rotations; j++) {
+      tempTiles.push(rotateImage(tile, j))      
+    }
+  }
+  tiles = tiles.concat(tempTiles)
 }
 
 function draw() {
   background(0);
   for (let i = 0; i < grid.length; i++) {
     const cell = grid[i];
-    if(!cell.options.length) newGrid(grid)
+    if(!cell.options.length) {
+      newGrid(grid)
+      // fill("orange");
+      // rect((width/DIM)*(i%DIM), (Math.floor(i/DIM))*(height/DIM), width/DIM, height/DIM)
+      // noLoop()
+      tries++
+      console.log(tries)
+    }
     if (cell.collapsed){
       image(tiles[cell.options[0]].image, (width/DIM)*(i%DIM), (Math.floor(i/DIM))*(height/DIM), width/DIM, height/DIM)
     } else {
