@@ -12,28 +12,33 @@ function loadTiles(tileChosen, tiles) {
   const path = `./tiles/${tileChosen}`
   // remember to not have uppercase names in the conditions
   if (tileChosen === "circuit") {
-    tiles[0] = { sockets: ["DDD", "DDD", "DDD", "DDD"], image: loadImage("tiles/circuit-coding-train/0.png"), rotations: 0 }
-    tiles[1] = { sockets: ["PPP", "PPP", "PPP", "PPP"], image: loadImage("tiles/circuit-coding-train/1.png"), rotations: 0 }
-    tiles[2] = { sockets: ["PPP", "PLP", "PPP", "PPP"], image: loadImage("tiles/circuit-coding-train/2.png"), rotations: 4 }
-    tiles[3] = { sockets: ["PPP", "PCP", "PPP", "PCP"], image: loadImage("tiles/circuit-coding-train/3.png"), rotations: 2 }
-    tiles[4] = { sockets: ["DPP", "PLP", "PPD", "DDD"], image: loadImage("tiles/circuit-coding-train/4.png"), rotations: 4 }
-    tiles[5] = { sockets: ["DPP", "PPP", "PPP", "PPD"], image: loadImage("tiles/circuit-coding-train/5.png"), rotations: 4 }
-    tiles[6] = { sockets: ["PPP", "PLP", "PPP", "PLP"], image: loadImage("tiles/circuit-coding-train/6.png"), rotations: 2 }
-    tiles[7] = { sockets: ["PCP", "PLP", "PCP", "PLP"], image: loadImage("tiles/circuit-coding-train/7.png"), rotations: 2 }
-    tiles[8] = { sockets: ["PCP", "PPP", "PLP", "PPP"], image: loadImage("tiles/circuit-coding-train/8.png"), rotations: 4 }
-    tiles[9] = { sockets: ["PLP", "PLP", "PPP", "PLP"], image: loadImage("tiles/circuit-coding-train/9.png"), rotations: 4 }
-    tiles[10] = { sockets: ["PLP", "PLP", "PLP", "PLP"], image: loadImage("tiles/circuit-coding-train/10.png"), rotations: 2 }
-    tiles[11] = { sockets: ["PLP", "PLP", "PPP", "PPP"], image: loadImage("tiles/circuit-coding-train/11.png"), rotations: 4 }
-    tiles[12] = { sockets: ["PPP", "PLP", "PPP", "PLP"], image: loadImage("tiles/circuit-coding-train/12.png"), rotations: 2 }
-    tiles[13] = { sockets: ["PPP", "PPD", "DPP", "PLP"], image: loadImage("tiles/circuit-coding-train/13.png"), rotations: 4 }
-    tiles[14] = { sockets: ["DPP", "PLP", "PPP", "PPD"], image: loadImage("tiles/circuit-coding-train/14.png"), rotations: 4 }
-    tiles[15] = { sockets: ["PPP", "PLP", "PCP", "PPP"], image: loadImage("tiles/circuit-coding-train/15.png"), rotations: 4 }
-    tiles[16] = { sockets: ["PCP", "PLP", "PPP", "PPP"], image: loadImage("tiles/circuit-coding-train/16.png"), rotations: 4 }
+    tiles[0] = { sockets: ["DDD", "DDD", "DDD", "DDD"], image: loadImage("tiles/circuit/0.png"), rotations: 0 }
+    tiles[1] = { sockets: ["PPP", "PPP", "PPP", "PPP"], image: loadImage("tiles/circuit/1.png"), rotations: 0 }
+    tiles[2] = { sockets: ["PPP", "PLP", "PPP", "PPP"], image: loadImage("tiles/circuit/2.png"), rotations: 4 }
+    tiles[3] = { sockets: ["PPP", "PCP", "PPP", "PCP"], image: loadImage("tiles/circuit/3.png"), rotations: 2 }
+    tiles[4] = { sockets: ["DPP", "PLP", "PPD", "DDD"], image: loadImage("tiles/circuit/4.png"), rotations: 4 }
+    tiles[5] = { sockets: ["DPP", "PPP", "PPP", "PPD"], image: loadImage("tiles/circuit/5.png"), rotations: 4 }
+    tiles[6] = { sockets: ["PPP", "PLP", "PPP", "PLP"], image: loadImage("tiles/circuit/6.png"), rotations: 2 }
+    tiles[7] = { sockets: ["PCP", "PLP", "PCP", "PLP"], image: loadImage("tiles/circuit/7.png"), rotations: 2 }
+    tiles[8] = { sockets: ["PCP", "PPP", "PLP", "PPP"], image: loadImage("tiles/circuit/8.png"), rotations: 4 }
+    tiles[9] = { sockets: ["PLP", "PLP", "PPP", "PLP"], image: loadImage("tiles/circuit/9.png"), rotations: 4 }
+    tiles[10] = { sockets: ["PLP", "PLP", "PLP", "PLP"], image: loadImage("tiles/circuit/10.png"), rotations: 2 }
+    tiles[11] = { sockets: ["PLP", "PLP", "PPP", "PPP"], image: loadImage("tiles/circuit/11.png"), rotations: 4 }
+    tiles[12] = { sockets: ["PPP", "PLP", "PPP", "PLP"], image: loadImage("tiles/circuit/12.png"), rotations: 2 }
+    tiles[13] = { sockets: ["PPP", "PPD", "DPP", "PLP"], image: loadImage("tiles/circuit/13.png"), rotations: 4 }
+    tiles[14] = { sockets: ["DPP", "PLP", "PPP", "PPD"], image: loadImage("tiles/circuit/14.png"), rotations: 4 }
+    tiles[15] = { sockets: ["PPP", "PLP", "PCP", "PPP"], image: loadImage("tiles/circuit/15.png"), rotations: 4 }
+    tiles[16] = { sockets: ["PCP", "PLP", "PPP", "PPP"], image: loadImage("tiles/circuit/16.png"), rotations: 4 }
     tilesTill = 52
   } else if (tileChosen === "grit-kit") {
     // load grit-kit(53 tiles 🤯)
   } else if (tileChosen === "rails") {
-    // load rails
+    tiles[0] = { sockets: [0, 0, 0, 0], image: loadImage("tiles/rails/tile0.png"), rotations: 0 }
+    tiles[1] = { sockets: [1, 1, 1, 0], image: loadImage("tiles/rails/tile1.png"), rotations: 4 }
+    tiles[2] = { sockets: [1, 1, 0, 0], image: loadImage("tiles/rails/tile2.png"), rotations: 4 }
+    tiles[3] = { sockets: [1, 0, 1, 0], image: loadImage("tiles/rails/tile3.png"), rotations: 2 }
+    tiles[4] = { sockets: [1, 1, 1, 1], image: loadImage("tiles/rails/tile4.png"), rotations: 0 }
+    tilesTill = 12
   } else {
     tiles[0] = { sockets: [0,0,0,0], image: loadImage(`${path}/blank.png`), rotations: 0 }
     tiles[1] = { sockets: [1,1,0,1], image: loadImage(`${path}/up.png`), rotations: 4 }
@@ -189,8 +194,8 @@ function draw() {
   }
   
   canCollapse = structuredClone(grid)
+  canCollapse = canCollapse.filter(cell => !cell.collapsed)
   canCollapse.sort((cellA, cellB) => cellA.options.length - cellB.options.length)
-  canCollapse = canCollapse.filter(cell => !cell.collapsed && cell.options.length !== 0)
   canCollapse = canCollapse.filter(cell => cell.options.length === canCollapse[0].options.length)
   collapseCell(random(canCollapse).position, grid)
 }

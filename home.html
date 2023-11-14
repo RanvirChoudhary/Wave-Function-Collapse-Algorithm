@@ -42,6 +42,14 @@
           <img class="tile-preview" width="120" height="120" src="./tiles/roads/up.png" alt="">
           <p>Roads</p>
         </div>
+        <div @click=setTile("Circuit") class="option">
+          <img class="tile-preview" width="120" height="120" src="./tiles/circuit/4.png" alt="">
+          <p>Circuit</p>
+        </div>
+        <div @click=setTile("Rails") class="option">
+          <img class="tile-preview" width="120" height="120" src="./tiles/rails/tile4.png" alt="">
+          <p>Rails</p>
+        </div>
     </div>
     <div class = "form" :class="{ notActive: !showDimInput }">
       <h1 class="form-instructions">Enter the dimensions for the grid</h1>
