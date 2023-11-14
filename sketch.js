@@ -95,7 +95,7 @@ function checkAdjacency(adjacentCell, collapsedCell, adjacentSocket, collapsedSo
   for (let i = 0; i < adjacentCell.options.length; i++) {
     const option = adjacentCell.options[i];
     let collapsedRespectiveSocket = tiles[collapsedCell.options[0]].sockets[collapsedSocket]
-    let adjacentRespectiveSocket = tiles[option].sockets[adjacentSocket].split("").reverse().join("")
+    let adjacentRespectiveSocket = tiles[option].sockets[adjacentSocket].toString().split("").reverse().join("")
     if (collapsedRespectiveSocket != adjacentRespectiveSocket) {
       adjacentCell.options.splice(i, 1)
       i -= 1
