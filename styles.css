@@ -9,6 +9,12 @@ body,html {
   box-sizing: border-box;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 body {
   background: linear-gradient(to bottom, #07a3b2, #d9ecc7);
   font-family: 'Montserrat', sans-serif;
@@ -116,7 +122,7 @@ body {
   cursor: pointer;
   border: none;
   background-color: rgba(0, 0, 0, 0);
-  font-family: "Poppins";
+  font-family: "Montserrat";
   text-decoration: none;
 }
 
