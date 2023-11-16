@@ -117,7 +117,8 @@
     </div>
     <div class = "form" :class="{ notActive: !showDimInput }">
       <h1 class="form-instructions">Enter the dimensions for the grid</h1>
-      <input v-model="dim" class="dim-input" type="text">
+      <h2>Ideal range is 20-40</h2>
+      <input v-model="dim" class="dim-input" type="number">
       <button @click=redirect class="submit-dim">Generate!</button>
     </div>
   </div>
