@@ -139,6 +139,7 @@ canvas {
   align-items: center;
   margin-top: -50px;
   height: 500px;
+  color: white;
 }
 
 .notActive {
@@ -159,6 +160,7 @@ canvas {
   height: 70px;
   font-size: 50px;
   background-color: rgba(0, 0, 0, 0);
+  color: white;
 }
 
 .submit-dim {
@@ -175,7 +177,7 @@ canvas {
 }
 
 .submit-dim {
-  color: #000000;
+  color: white;
   transition: all 0.3s;
   position: relative;
 }
