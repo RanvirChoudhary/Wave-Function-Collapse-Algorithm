@@ -19,36 +19,100 @@
   <div id = "app">
     <div :class = "{ notActive: !showTileChoice}" class="options-grid">
         <div @click=setTile("Elementary") class="option">
-          <img class="tile-preview" width="120" height="120" src="./tiles/elementary/up.png" alt="">
-          <p>Elementary</p>
+          <div class="option-preview">
+            <img class="tile-preview radius-top-left" width="90" height="90" src="./tiles/elementary/left.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/elementary/blank.png" alt="">
+            <img class="tile-preview radius-top-right" width="90" height="90" src="./tiles/elementary/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/elementary/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/elementary/down.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/elementary/up.png" alt="">
+          </div>
+          <p class="tile-name">Elementary</p>
+          <p class="tile-desc">The classic tileset, whice gives a clear understanding of the algorithm</p>
         </div>
         <div @click=setTile("Tracks") class="option">
-          <img class="tile-preview" width="120" height="120" src="./tiles/tracks/up.png" alt="">
+          <div class="option-preview">
+            <img class="tile-preview radius-top-left" width="90" height="90" src="./tiles/tracks/left.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/tracks/blank.png" alt="">
+            <img class="tile-preview radius-top-right" width="90" height="90" src="./tiles/tracks/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/tracks/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/tracks/down.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/tracks/up.png" alt="">
+          </div>
           <p>Tracks</p>
+          <p class="tile-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
         </div>
-        <div @click=setTile("Mountains") class="option">
-          <img class="tile-preview" width="120" height="120" src="./tiles/mountains/up.png" alt="">
-          <p>Mountains</p>
+        <div @click=setTile("Clouds") class="option">
+          <div class="option-preview">
+            <img class="tile-preview radius-top-left" width="90" height="90" src="./tiles/clouds/left.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/clouds/blank.png" alt="">
+            <img class="tile-preview radius-top-right" width="90" height="90" src="./tiles/clouds/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/clouds/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/clouds/down.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/clouds/up.png" alt="">
+          </div>
+          <p class="tile-name">Mountains</p>
+          <p class="tile-desc">lorem ipsum dolor sit amet consectetur adipisicing elit</p>
         </div>
         <div @click=setTile("Pipes") class="option">
-          <img class="tile-preview" width="120" height="120" src="./tiles/pipes/up.png" alt="">
-          <p>Pipes</p>
+          <div class="option-preview">
+            <img class="tile-preview radius-top-left" width="90" height="90" src="./tiles/pipes/left.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/pipes/blank.png" alt="">
+            <img class="tile-preview radius-top-right" width="90" height="90" src="./tiles/pipes/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/pipes/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/pipes/down.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/pipes/up.png" alt="">
+          </div>
+          <p class="tile-name">Pipes</p>
+          <p class="tile-desc">lorem ipsum dolor sit amet consectetur adipisicing elit</p>
         </div>
         <div @click=setTile("Polka") class="option">
-          <img class="tile-preview" width="120" height="120" src="./tiles/polka/up.png" alt="">
-          <p>Polka</p>
+          <div class="option-preview">
+            <img class="tile-preview radius-top-left" width="90" height="90" src="./tiles/polka/left.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/polka/blank.png" alt="">
+            <img class="tile-preview radius-top-right" width="90" height="90" src="./tiles/polka/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/polka/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/polka/down.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/polka/up.png" alt="">
+          </div>
+          <p class="tile-name">Polka</p>
+          <p class="tile-desc">lorem ipsum dolor sit amet consectetur adipisicing elit</p>
         </div>
         <div @click=setTile("Roads") class="option">
-          <img class="tile-preview" width="120" height="120" src="./tiles/roads/up.png" alt="">
-          <p>Roads</p>
+          <div class="option-preview">
+            <img class="tile-preview radius-top-left" width="90" height="90" src="./tiles/roads/left.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/roads/blank.png" alt="">
+            <img class="tile-preview radius-top-right" width="90" height="90" src="./tiles/roads/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/roads/right.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/roads/down.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/roads/up.png" alt="">
+          </div>
+          <p class="tile-name">Roads</p>
+          <p class="tile-desc">lorem ipsum dolor sit amet consectetur adipisicing elit</p>
         </div>
         <div @click=setTile("Circuit") class="option">
-          <img class="tile-preview" width="120" height="120" src="./tiles/circuit/4.png" alt="">
-          <p>Circuit</p>
+          <div class="option-preview">
+            <img class="tile-preview radius-top-left" width="90" height="90" src="./tiles/circuit/0.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/circuit/4.png" alt="">
+            <img class="tile-preview radius-top-right" width="90" height="90" src="./tiles/circuit/9.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/circuit/0.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/circuit/4.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/circuit/12.png" alt="">
+          </div>
+          <p class="tile-name">Circuit</p>
+          <p class="tile-desc">lorem ipsum dolor sit amet consectetur adipisicing elit</p>
         </div>
         <div @click=setTile("Rails") class="option">
-          <img class="tile-preview" width="120" height="120" src="./tiles/rails/tile4.png" alt="">
-          <p>Rails</p>
+          <div class="option-preview">
+            <img class="tile-preview radius-top-left" width="90" height="90" src="./tiles/rails/tile0.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/rails/tile1.png" alt="">
+            <img class="tile-preview radius-top-right" width="90" height="90" src="./tiles/rails/tile4.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/rails/tile0.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/rails/tile3.png" alt="">
+            <img class="tile-preview" width="90" height="90" src="./tiles/rails/tile3.png" alt="">
+          </div>
+          <p class="tile-name">Rails</p>
+          <p class="tile-desc">lorem ipsum dolor sit amet consectetur adipisicing elit</p>
         </div>
     </div>
     <div class = "form" :class="{ notActive: !showDimInput }">
@@ -58,5 +122,5 @@
     </div>
   </div>
   <script src="home.js"></script>  
-</body>
+</class=body>
 </html>
