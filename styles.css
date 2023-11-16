@@ -36,6 +36,16 @@ body {
   background: linear-gradient(to bottom, #161616, #3c3c3c);
 }
 
+.algorithm {
+  height: 100%;
+  background: radial-gradient(circle, #ffffff, #3c3c3c, 80%, #161616);
+  /* background: radial-gradient(circle, , , ); */
+}
+
+canvas {
+  border-radius: 10px;
+}
+
 .option-preview {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -73,30 +83,31 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   color: rgb(255, 255, 255);
   margin: 10px;
-  /* padding: 10px; */
-  padding-bottom: 10px;
+  padding-bottom: 15px;
   border-radius: 10px;
   border: rgb(125, 125, 125) solid 1px;
   width: 270px;
-  height: 290px;
+  height: 295px;
   font-size: 30px;
   background-color: #282828b5;
 }
 
 .back-btn {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.6);
   border: none;
   cursor: pointer;
   margin: 10px;
   padding-top: 2px;
   border-radius: 2px;
+  width: 60px;
+  height: 60px;
 }
 
 .back-btn:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.0);
+  color: white;
 }
 
 #app  {
@@ -205,12 +216,6 @@ body {
 .submit-dim:hover::after {
   opacity: 0; 
   transform: scale(0.1, 1);
-}
-
-.tile-preview {
-  margin-top: -8px;
-  /* border-radius: 10px; */
-  /* margin-bottom: 20px; */
 }
 
 .form-instructions {
